@@ -1,0 +1,1614 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mdscript name="Illuminati" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:/x4_extract_2.5/libraries/md.xsd">
+    <cues>
+    	<!-- Tell the lua side that the game loaded. -->
+		<cue name="Reload_Listener" instantiate="true" namespace="this">
+			<conditions>
+				<check_any>
+					<event_game_loaded/>
+					<event_game_started/>
+				</check_any>
+			</conditions>
+			<actions>
+				<raise_lua_event name="'Lua_Loader.Signal'"/>
+			</actions>
+		</cue>
+        <cue name="Register_Options_Menu" instantiate="true" namespace="this">
+            <conditions>
+                <event_cue_signalled cue="md.Simple_Menu_API.Reloaded"/>
+            </conditions>
+            <actions>
+                <signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu"
+                param = "table[
+                    $id = 'illuminati_menu',
+                    $columns = 2, 
+                    $title = 'Illuminati',
+                    $onOpen = Main_Menu
+                    ]"/>
+                <signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu"
+                param = "table[
+                    $id = 'do_argon_menu',
+                    $columns = 2, 
+                    $title = 'Argon Relations',
+                    $private = 1,
+                    $onOpen = Do_argon
+                    ]"/>
+                <signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu"
+                param = "table[
+                    $id = 'do_hop_menu',
+                    $columns = 2, 
+                    $title = 'HOP Relations',
+                    $private = 1,
+                    $onOpen = Do_hop
+                    ]"/>
+                <signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu"
+                param = "table[
+                    $id = 'do_anti_menu',
+                    $columns = 2, 
+                    $title = 'Antigone Relations',
+                    $private = 1,
+                    $onOpen = Do_anti
+                    ]"/>
+                <signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu"
+                param = "table[
+                    $id = 'do_alliance_menu',
+                    $columns = 2, 
+                    $title = 'Alliance Relations',
+                    $private = 1,
+                    $onOpen = Do_alliance
+                    ]"/>
+                <signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu"
+                param = "table[
+                    $id = 'do_hatikvah_menu',
+                    $columns = 2, 
+                    $title = 'Hatikvah Relations',
+                    $private = 1,
+                    $onOpen = Do_hatikvah
+                    ]"/>
+                <signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu"
+                param = "table[
+                    $id = 'do_ministry_menu',
+                    $columns = 2, 
+                    $title = 'Ministry Relations',
+                    $private = 1,
+                    $onOpen = Do_ministry
+                    ]"/>
+                <signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu"
+                param = "table[
+                    $id = 'do_paranid_menu',
+                    $columns = 2, 
+                    $title = 'Paranid Relations',
+                    $private = 1,
+                    $onOpen = Do_paranid
+                    ]"/>
+                <signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu"
+                param = "table[
+                    $id = 'do_teladi_menu',
+                    $columns = 2, 
+                    $title = 'Teladi Relations',
+                    $private = 1,
+                    $onOpen = Do_teladi
+                    ]"/>
+                <signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu"
+                param = "table[
+                    $id = 'do_scale_menu',
+                    $columns = 2, 
+                    $title = 'Scale Plate Relations',
+                    $private = 1,
+                    $onOpen = Do_scale
+                    ]"/>
+                <signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu"
+                param = "table[
+                    $id = 'do_you_menu',
+                    $columns = 2, 
+                    $title = 'Your Relations',
+                    $private = 1,
+                    $onOpen = Do_you
+                    ]"/>
+
+            </actions>
+        </cue>
+        <cue name="Main_Menu" instantiate="true" namespace="this">
+            <conditions>
+                <check_any>
+                    <event_cue_signalled />
+                </check_any>
+            </conditions>
+            <actions>
+                <set_value name="$ObjectTable" exact="table[
+                            {1} = table [
+                                $Return = Do_argon,
+                                $Name = 'Argon',
+                                $Menu = 'do_argon_menu'
+                                ],
+                            {2} = table [
+                                $Return = Do_hop,
+                                $Name = 'HOP',
+                                $Menu = 'do_hop_menu'
+                                ],
+                            {3} = table [
+                                $Return = Do_anti,
+                                $Name = 'Antigone',
+                                $Menu = 'do_anti_menu'
+                                ],
+                            {4} = table [
+                                $Return = Do_alliance,
+                                $Name = 'Alliance',
+                                $Menu = 'do_alliance_menu'
+                                ],
+                            {5} = table [
+                                $Return = Do_hatikvah,
+                                $Name = 'Hatikvah',
+                                $Menu = 'do_hatikvah_menu'
+                                ],
+                            {6} = table [
+                                $Return = Do_ministry,
+                                $Name = 'Ministry',
+                                $Menu = 'do_ministry_menu'
+                                ],
+                            {7} = table [
+                                $Return = Do_paranid,
+                                $Name = 'Paranid',
+                                $Menu = 'do_paranid_menu'
+                                ],
+                            {8} = table [
+                                $Return = Do_teladi,
+                                $Name = 'Teladi',
+                                $Menu = 'do_teladi_menu'
+                                ],
+                            {9} = table [
+                                $Return = Do_scale,
+                                $Name = 'Scale Plate',
+                                $Menu = 'do_scale_menu'
+                                ],
+                            {10} = table [
+                                $Return = Do_you,
+                                $Name = 'You',
+                                $Menu = 'do_you_menu'
+                                ],
+                        ]" />
+            </actions>
+            <cues>
+                <cue name="Main_Menu_Call_Menu_LIB" ref="md.Illuminati.Menu_LIB">
+                    <param name="Title" value="'Illuminati'" />
+                    <param name="MenuType" value="'main'" />
+                    <param name="ObjectTable" value="$ObjectTable" />
+                    <param name="ButtonText" value="'Open Menu'" />
+                </cue>
+                <actions>
+                    
+                </actions>
+            </cues>
+        </cue>
+        <cue name="Do_argon" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_value name="$ObjectTable" exact="table[
+                            {1} = table [
+                                $Name = 'Antigone',
+                                $Return = argon_antigone,
+                                ],    
+                            {2} = table [
+                                $Name = 'HOP',
+                                $Return = argon_hop,
+                                ],
+                            {3} = table [
+                                $Name = 'Alliance',
+                                $Return = argon_alliance,
+                                ],
+                            {4} = table [
+                                $Name = 'Hatikvah',
+                                $Return = argon_hatikvah,
+                                ],  
+                            {5} = table [
+                                $Name = 'Ministry',
+                                $Return = argon_ministry,
+                                ],
+                            {6} = table [
+                                $Name = 'Paranid',
+                                $Return = argon_paranid,
+                                ],
+                            {7} = table [
+                                $Name = 'Teladi',
+                                $Return = argon_teladi,
+                                ],                            
+                        ]" />
+
+            </actions>
+            <cues>
+                <cue name="Argon_Relations_Menu_LIB" ref="md.Illuminati.Menu_LIB">
+                    <param name="Title" value="'Argon Relations'" />
+                    <param name="ObjectTable" value="$ObjectTable" />
+                    <param name="MenuType" value="'position'" />
+                    <param name="ButtonText" value="'WAR'" />
+                    <param name="Height" value="600" />
+                    <param name="Width" value="600" />
+                </cue>
+            </cues>
+        </cue>
+
+        <cue name="argon_teladi" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.teladi" otherfaction="faction.argon" value="-1.00"/>
+                <set_faction_relation faction="faction.argon" otherfaction="faction.teladi" value="-1.00"/>
+                <show_notification text="'WAR: Teladi and Argon'" />
+            </actions>
+        </cue>
+
+        <cue name="argon_antigone" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.antigone" otherfaction="faction.argon" value="-1.00"/>
+                <set_faction_relation faction="faction.argon" otherfaction="faction.antigone" value="-1.00"/>
+                <show_notification text="'WAR: Antigone and Argon'" />
+            </actions>
+        </cue>
+
+        <cue name="argon_hop" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.holyorder" otherfaction="faction.argon" value="-1.00"/>
+                <set_faction_relation faction="faction.argon" otherfaction="faction.holyorder" value="-1.00"/>
+                <show_notification text="'WAR: HOP and Argon'" />
+            </actions>
+        </cue>
+
+        <cue name="argon_alliance" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.alliance" otherfaction="faction.argon" value="-1.00"/>
+                <set_faction_relation faction="faction.argon" otherfaction="faction.alliance" value="-1.00"/>
+                <show_notification text="'WAR: Alliance and Argon'" />
+            </actions>
+        </cue>
+
+        <cue name="argon_hatikvah" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.hatikvah" otherfaction="faction.argon" value="-1.00"/>
+                <set_faction_relation faction="faction.argon" otherfaction="faction.hatikvah" value="-1.00"/>
+                <show_notification text="'WAR: Hatikvah and Argon'" />
+            </actions>
+        </cue>
+
+        <cue name="argon_ministry" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.ministry" otherfaction="faction.argon" value="-1.00"/>
+                <set_faction_relation faction="faction.argon" otherfaction="faction.ministry" value="-1.00"/>
+                <show_notification text="'WAR: Ministry and Argon'" />
+            </actions>
+        </cue>
+
+        <cue name="argon_paranid" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.paranid" otherfaction="faction.argon" value="-1.00"/>
+                <set_faction_relation faction="faction.argon" otherfaction="faction.paranid" value="-1.00"/>
+                <show_notification text="'WAR: Paranid and Argon'" />
+            </actions>
+        </cue>
+
+        <cue name="Do_hop" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_value name="$ObjectTable" exact="table[
+                            {1} = table [
+                                $Name = 'Antigone',
+                                $Return = hop_antigone,
+                                ],    
+                            {2} = table [
+                                $Name = 'Argon',
+                                $Return = hop_argon,
+                                ],
+                            {3} = table [
+                                $Name = 'Alliance',
+                                $Return = hop_alliance,
+                                ],
+                            {4} = table [
+                                $Name = 'Hatikvah',
+                                $Return = hop_hatikvah,
+                                ],  
+                            {5} = table [
+                                $Name = 'Ministry',
+                                $Return = hop_ministry,
+                                ],
+                            {6} = table [
+                                $Name = 'Paranid',
+                                $Return = hop_paranid,
+                                ],
+                            {7} = table [
+                                $Name = 'Teladi',
+                                $Return = hop_teladi,
+                                ],                            
+                        ]" />
+
+            </actions>
+            <cues>
+                <cue name="HOP_Menu_LIB" ref="md.Illuminati.Menu_LIB">
+                    <param name="Title" value="'Holy Order Relations'" />
+                    <param name="ObjectTable" value="$ObjectTable" />
+                    <param name="MenuType" value="'position'" />
+                    <param name="ButtonText" value="'WAR'" />
+                    <param name="Height" value="600" />
+                    <param name="Width" value="600" />
+                </cue>
+            </cues>
+        </cue>
+        <cue name="hop_teladi" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.teladi" otherfaction="faction.holyorder" value="-1.00"/>
+                <set_faction_relation faction="faction.holyorder" otherfaction="faction.teladi" value="-1.00"/>
+                <show_notification text="'WAR: Teladi and HOP'" />
+            </actions>
+        </cue>
+
+        <cue name="hop_antigone" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.antigone" otherfaction="faction.holyorder" value="-1.00"/>
+                <set_faction_relation faction="faction.holyorder" otherfaction="faction.antigone" value="-1.00"/>
+                <show_notification text="'WAR: Antigone and HOP'" />
+            </actions>
+        </cue>
+
+        <cue name="hop_argon" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.holyorder" otherfaction="faction.argon" value="-1.00"/>
+                <set_faction_relation faction="faction.argon" otherfaction="faction.holyorder" value="-1.00"/>
+                <show_notification text="'WAR: Argon and HOP'" />
+            </actions>
+        </cue>
+
+        <cue name="hop_alliance" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.alliance" otherfaction="faction.holyorder" value="-1.00"/>
+                <set_faction_relation faction="faction.holyorder" otherfaction="faction.alliance" value="-1.00"/>
+                <show_notification text="'WAR: Alliance and HOP'" />
+            </actions>
+        </cue>
+
+        <cue name="hop_hatikvah" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.hatikvah" otherfaction="faction.holyorder" value="-1.00"/>
+                <set_faction_relation faction="faction.holyorder" otherfaction="faction.hatikvah" value="-1.00"/>
+                <show_notification text="'WAR: Hatikvah and HOP'" />
+            </actions>
+        </cue>
+
+        <cue name="hop_ministry" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.ministry" otherfaction="faction.holyorder" value="-1.00"/>
+                <set_faction_relation faction="faction.holyorder" otherfaction="faction.ministry" value="-1.00"/>
+                <show_notification text="'WAR: Ministry and HOP'" />
+            </actions>
+        </cue>
+
+        <cue name="hop_paranid" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.paranid" otherfaction="faction.holyorder" value="-1.00"/>
+                <set_faction_relation faction="faction.holyorder" otherfaction="faction.paranid" value="-1.00"/>
+                <show_notification text="'WAR: Paranid and HOP'" />
+            </actions>
+        </cue>
+
+        <cue name="Do_anti" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_value name="$ObjectTable" exact="table[
+                            {1} = table [
+                                $Name = 'Holy Order',
+                                $Return = anti_hop,
+                                ],    
+                            {2} = table [
+                                $Name = 'Argon',
+                                $Return = anti_argon,
+                                ],
+                            {3} = table [
+                                $Name = 'Alliance',
+                                $Return = anti_alliance,
+                                ],
+                            {4} = table [
+                                $Name = 'Hatikvah',
+                                $Return = anti_hatikvah,
+                                ],  
+                            {5} = table [
+                                $Name = 'Ministry',
+                                $Return = anti_ministry,
+                                ],
+                            {6} = table [
+                                $Name = 'Paranid',
+                                $Return = anti_paranid,
+                                ],
+                            {7} = table [
+                                $Name = 'Teladi',
+                                $Return = anti_teladi,
+                                ],                            
+                        ]" />
+
+            </actions>
+            <cues>
+                <cue name="Anti_Menu_LIB" ref="md.Illuminati.Menu_LIB">
+                    <param name="Title" value="'Antigone Relations'" />
+                    <param name="ObjectTable" value="$ObjectTable" />
+                    <param name="MenuType" value="'position'" />
+                    <param name="ButtonText" value="'WAR'" />
+                    <param name="Height" value="600" />
+                    <param name="Width" value="600" />
+                </cue>
+            </cues>
+        </cue>
+        <cue name="anti_teladi" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.teladi" otherfaction="faction.antigone" value="-1.00"/>
+                <set_faction_relation faction="faction.antigone" otherfaction="faction.teladi" value="-1.00"/>
+                <show_notification text="'WAR: Teladi and Antigone'" />
+            </actions>
+        </cue>
+
+        <cue name="anti_hop" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.antigone" otherfaction="faction.holyorder" value="-1.00"/>
+                <set_faction_relation faction="faction.holyorder" otherfaction="faction.antigone" value="-1.00"/>
+                <show_notification text="'WAR: HOP and Antigone'" />
+            </actions>
+        </cue>
+
+        <cue name="anti_argon" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.antigone" otherfaction="faction.argon" value="-1.00"/>
+                <set_faction_relation faction="faction.argon" otherfaction="faction.antigone" value="-1.00"/>
+                <show_notification text="'WAR: Argoni and Antigone'" />
+            </actions>
+        </cue>
+
+        <cue name="anti_alliance" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.alliance" otherfaction="faction.antigone" value="-1.00"/>
+                <set_faction_relation faction="faction.antigone" otherfaction="faction.alliance" value="-1.00"/>
+                <show_notification text="'WAR: Alliance and Antigone'" />
+            </actions>
+        </cue>
+
+        <cue name="anti_hatikvah" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.hatikvah" otherfaction="faction.antigone" value="-1.00"/>
+                <set_faction_relation faction="faction.antigone" otherfaction="faction.hatikvah" value="-1.00"/>
+                <show_notification text="'WAR: Hatikvah and Antigone'" />
+            </actions>
+        </cue>
+
+        <cue name="anti_ministry" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.ministry" otherfaction="faction.antigone" value="-1.00"/>
+                <set_faction_relation faction="faction.antigone" otherfaction="faction.ministry" value="-1.00"/>
+                <show_notification text="'WAR: Ministry and Antigone'" />
+            </actions>
+        </cue>
+
+        <cue name="anti_paranid" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.paranid" otherfaction="faction.antigone" value="-1.00"/>
+                <set_faction_relation faction="faction.antigone" otherfaction="faction.paranid" value="-1.00"/>
+                <show_notification text="'WAR: Paranid and Antigone'" />
+            </actions>
+        </cue>
+
+        <cue name="Do_alliance" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_value name="$ObjectTable" exact="table[
+                            {1} = table [
+                                $Name = 'Holy Order',
+                                $Return = alliance_hop,
+                                ],    
+                            {2} = table [
+                                $Name = 'Argon',
+                                $Return = alliance_argon,
+                                ],
+                            {3} = table [
+                                $Name = 'Antigone',
+                                $Return = alliance_anti,
+                                ],
+                            {4} = table [
+                                $Name = 'Hatikvah',
+                                $Return = alliance_hatikvah,
+                                ],  
+                            {5} = table [
+                                $Name = 'Ministry',
+                                $Return = alliance_ministry,
+                                ],
+                            {6} = table [
+                                $Name = 'Paranid',
+                                $Return = alliance_paranid,
+                                ],
+                            {7} = table [
+                                $Name = 'Teladi',
+                                $Return = alliance_teladi,
+                                ],                            
+                        ]" />
+
+            </actions>
+            <cues>
+                <cue name="Alliance_Menu_LIB" ref="md.Illuminati.Menu_LIB">
+                    <param name="Title" value="'Alliance Relations'" />
+                    <param name="ObjectTable" value="$ObjectTable" />
+                    <param name="MenuType" value="'position'" />
+                    <param name="ButtonText" value="'WAR'" />
+                    <param name="Height" value="600" />
+                    <param name="Width" value="600" />
+                </cue>
+            </cues>
+        </cue>
+        <cue name="alliance_teladi" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.teladi" otherfaction="faction.alliance" value="-1.00"/>
+                <set_faction_relation faction="faction.alliance" otherfaction="faction.teladi" value="-1.00"/>
+                <show_notification text="'WAR: Teladi and Alliance'" />
+            </actions>
+        </cue>
+
+        <cue name="alliance_hop" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.alliance" otherfaction="faction.holyorder" value="-1.00"/>
+                <set_faction_relation faction="faction.holyorder" otherfaction="faction.alliance" value="-1.00"/>
+                <show_notification text="'WAR: HOP and Alliance'" />
+            </actions>
+        </cue>
+
+        <cue name="alliance_argon" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.alliance" otherfaction="faction.argon" value="-1.00"/>
+                <set_faction_relation faction="faction.argon" otherfaction="faction.alliance" value="-1.00"/>
+                <show_notification text="'WAR: Argon and Alliance'" />
+            </actions>
+        </cue>
+
+        <cue name="alliance_anti" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.alliance" otherfaction="faction.antigone" value="-1.00"/>
+                <set_faction_relation faction="faction.antigone" otherfaction="faction.alliance" value="-1.00"/>
+                <show_notification text="'WAR: Antigone and Alliance'" />
+            </actions>
+        </cue>
+
+        <cue name="alliance_hatikvah" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.hatikvah" otherfaction="faction.alliance" value="-1.00"/>
+                <set_faction_relation faction="faction.alliance" otherfaction="faction.hatikvah" value="-1.00"/>
+                <show_notification text="'WAR: Hatikvah and Alliance'" />
+            </actions>
+        </cue>
+
+        <cue name="alliance_ministry" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.ministry" otherfaction="faction.alliance" value="-1.00"/>
+                <set_faction_relation faction="faction.alliance" otherfaction="faction.ministry" value="-1.00"/>
+                <show_notification text="'WAR: Ministry and Alliance'" />
+            </actions>
+        </cue>
+
+        <cue name="alliance_paranid" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.paranid" otherfaction="faction.alliance" value="-1.00"/>
+                <set_faction_relation faction="faction.alliance" otherfaction="faction.paranid" value="-1.00"/>
+                <show_notification text="'WAR: Paranid and Alliance'" />
+            </actions>
+        </cue>
+
+        <cue name="Do_hatikvah" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_value name="$ObjectTable" exact="table[
+                            {1} = table [
+                                $Name = 'Holy Order',
+                                $Return = hatikvah_hop,
+                                ],    
+                            {2} = table [
+                                $Name = 'Argon',
+                                $Return = hatikvah_argon,
+                                ],
+                            {3} = table [
+                                $Name = 'Antigone',
+                                $Return = hatikvah_anti,
+                                ],
+                            {4} = table [
+                                $Name = 'Alliance',
+                                $Return = hatikvah_alliance,
+                                ],  
+                            {5} = table [
+                                $Name = 'Ministry',
+                                $Return = hatikvah_ministry,
+                                ],
+                            {6} = table [
+                                $Name = 'Paranid',
+                                $Return = hatikvah_paranid,
+                                ],
+                            {7} = table [
+                                $Name = 'Teladi',
+                                $Return = hatikvah_teladi,
+                                ],                            
+                        ]" />
+
+            </actions>
+            <cues>
+                <cue name="hatikvah_Menu_LIB" ref="md.Illuminati.Menu_LIB">
+                    <param name="Title" value="'Hatikvah Relations'" />
+                    <param name="ObjectTable" value="$ObjectTable" />
+                    <param name="MenuType" value="'position'" />
+                    <param name="ButtonText" value="'WAR'" />
+                    <param name="Height" value="600" />
+                    <param name="Width" value="600" />
+                </cue>
+            </cues>
+        </cue>
+        <cue name="hatikvah_teladi" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.teladi" otherfaction="faction.hatikvah" value="-1.00"/>
+                <set_faction_relation faction="faction.hatikvah" otherfaction="faction.teladi" value="-1.00"/>
+                <show_notification text="'WAR: Teladi and Hatikvah'" />
+            </actions>
+        </cue>
+
+        <cue name="hatikvah_hop" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.hatikvah" otherfaction="faction.holyorder" value="-1.00"/>
+                <set_faction_relation faction="faction.holyorder" otherfaction="faction.hatikvah" value="-1.00"/>
+                <show_notification text="'WAR: HOP and Hatikvah'" />
+            </actions>
+        </cue>
+
+        <cue name="hatikvah_argon" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.hatikvah" otherfaction="faction.argon" value="-1.00"/>
+                <set_faction_relation faction="faction.argon" otherfaction="faction.hatikvah" value="-1.00"/>
+                <show_notification text="'WAR: Argon and Hatikvah'" />
+            </actions>
+        </cue>
+
+        <cue name="hatikvah_anti" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.hatikvah" otherfaction="faction.antigone" value="-1.00"/>
+                <set_faction_relation faction="faction.antigone" otherfaction="faction.hatikvah" value="-1.00"/>
+                <show_notification text="'WAR: Antigone and Hatikvah'" />
+            </actions>
+        </cue>
+
+        <cue name="hatikvah_alliance" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.hatikvah" otherfaction="faction.alliance" value="-1.00"/>
+                <set_faction_relation faction="faction.alliance" otherfaction="faction.hatikvah" value="-1.00"/>
+                <show_notification text="'WAR: Alliance and Hatikvah'" />
+            </actions>
+        </cue>
+
+        <cue name="hatikvah_ministry" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.ministry" otherfaction="faction.hatikvah" value="-1.00"/>
+                <set_faction_relation faction="faction.hatikvah" otherfaction="faction.ministry" value="-1.00"/>
+                <show_notification text="'WAR: Ministry and Hatikvah'" />
+            </actions>
+        </cue>
+
+        <cue name="hatikvah_paranid" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.paranid" otherfaction="faction.hatikvah" value="-1.00"/>
+                <set_faction_relation faction="faction.hatikvah" otherfaction="faction.paranid" value="-1.00"/>
+                <show_notification text="'WAR: Paranid and Hatikvah'" />
+            </actions>
+        </cue>
+
+        <cue name="Do_ministry" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_value name="$ObjectTable" exact="table[
+                            {1} = table [
+                                $Name = 'Holy Order',
+                                $Return = ministry_hop,
+                                ],    
+                            {2} = table [
+                                $Name = 'Argon',
+                                $Return = ministry_argon,
+                                ],
+                            {3} = table [
+                                $Name = 'Antigone',
+                                $Return =ministry_anti,
+                                ],
+                            {4} = table [
+                                $Name = 'Alliance',
+                                $Return = ministry_alliance,
+                                ],  
+                            {5} = table [
+                                $Name = 'Hatikvah',
+                                $Return = ministry_ministry,
+                                ],
+                            {6} = table [
+                                $Name = 'Paranid',
+                                $Return = ministry_paranid,
+                                ],
+                            {7} = table [
+                                $Name = 'Teladi',
+                                $Return = ministry_teladi,
+                                ],                            
+                        ]" />
+
+            </actions>
+            <cues>
+                <cue name="ministry_Menu_LIB" ref="md.Illuminati.Menu_LIB">
+                    <param name="Title" value="'Ministry Relations'" />
+                    <param name="ObjectTable" value="$ObjectTable" />
+                    <param name="MenuType" value="'position'" />
+                    <param name="ButtonText" value="'WAR'" />
+                    <param name="Height" value="600" />
+                    <param name="Width" value="600" />
+                </cue>
+            </cues>
+        </cue>
+        <cue name="ministry_teladi" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.teladi" otherfaction="faction.ministry" value="-1.00"/>
+                <set_faction_relation faction="faction.ministry" otherfaction="faction.teladi" value="-1.00"/>
+                <show_notification text="'WAR: Teladi and Ministry'" />
+            </actions>
+        </cue>
+
+        <cue name="ministry_hop" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.ministry" otherfaction="faction.holyorder" value="-1.00"/>
+                <set_faction_relation faction="faction.holyorder" otherfaction="faction.ministry" value="-1.00"/>
+                <show_notification text="'WAR: HOP and Ministry'" />
+            </actions>
+        </cue>
+
+        <cue name="ministry_argon" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.ministry" otherfaction="faction.argon" value="-1.00"/>
+                <set_faction_relation faction="faction.argon" otherfaction="faction.ministry" value="-1.00"/>
+                <show_notification text="'WAR: Argon and Ministry'" />
+            </actions>
+        </cue>
+
+        <cue name="ministry_anti" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.ministry" otherfaction="faction.antigone" value="-1.00"/>
+                <set_faction_relation faction="faction.antigone" otherfaction="faction.ministry" value="-1.00"/>
+                <show_notification text="'WAR: Antigone and Ministry'" />
+            </actions>
+        </cue>
+
+        <cue name="ministry_alliance" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.ministry" otherfaction="faction.alliance" value="-1.00"/>
+                <set_faction_relation faction="faction.alliance" otherfaction="faction.ministry" value="-1.00"/>
+                <show_notification text="'WAR: Alliance and Ministry'" />
+            </actions>
+        </cue>
+
+        <cue name="ministry_hatikvah" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.ministry" otherfaction="faction.hatikvah" value="-1.00"/>
+                <set_faction_relation faction="faction.hatikvah" otherfaction="faction.ministry" value="-1.00"/>
+                <show_notification text="'WAR: Hatikvah and Ministry'" />
+            </actions>
+        </cue>
+
+        <cue name="ministry_paranid" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.paranid" otherfaction="faction.ministry" value="-1.00"/>
+                <set_faction_relation faction="faction.ministry" otherfaction="faction.paranid" value="-1.00"/>
+                <show_notification text="'WAR: Paranid and Ministry'" />
+            </actions>
+        </cue>
+
+        <cue name="Do_paranid" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_value name="$ObjectTable" exact="table[
+                            {1} = table [
+                                $Name = 'Holy Order',
+                                $Return = paranid_hop,
+                                ],    
+                            {2} = table [
+                                $Name = 'Argon',
+                                $Return = paranid_argon,
+                                ],
+                            {3} = table [
+                                $Name = 'Antigone',
+                                $Return = paranid_anti,
+                                ],
+                            {4} = table [
+                                $Name = 'Alliance',
+                                $Return = paranid_alliance,
+                                ],  
+                            {5} = table [
+                                $Name = 'Hatikvah',
+                                $Return = paranid_ministry,
+                                ],
+                            {6} = table [
+                                $Name = 'Ministry',
+                                $Return = paranid_ministry,
+                                ],
+                            {7} = table [
+                                $Name = 'Teladi',
+                                $Return = paranid_teladi,
+                                ],                            
+                        ]" />
+
+            </actions>
+            <cues>
+                <cue name="paranid_Menu_LIB" ref="md.Illuminati.Menu_LIB">
+                    <param name="Title" value="'Paranid Relations'" />
+                    <param name="ObjectTable" value="$ObjectTable" />
+                    <param name="MenuType" value="'position'" />
+                    <param name="ButtonText" value="'WAR'" />
+                    <param name="Height" value="600" />
+                    <param name="Width" value="600" />
+                </cue>
+            </cues>
+        </cue>
+        <cue name="paranid_teladi" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.teladi" otherfaction="faction.paranid" value="-1.00"/>
+                <set_faction_relation faction="faction.paranid" otherfaction="faction.teladi" value="-1.00"/>
+                <show_notification text="'WAR: Teladi and Paranid'" />
+            </actions>
+        </cue>
+
+        <cue name="paranid_hop" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.paranid" otherfaction="faction.holyorder" value="-1.00"/>
+                <set_faction_relation faction="faction.holyorder" otherfaction="faction.paranid" value="-1.00"/>
+                <show_notification text="'WAR: HOP and Paranid'" />
+            </actions>
+        </cue>
+
+        <cue name="paranid_argon" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.paranid" otherfaction="faction.argon" value="-1.00"/>
+                <set_faction_relation faction="faction.argon" otherfaction="faction.paranid" value="-1.00"/>
+                <show_notification text="'WAR: Argon and Paranid'" />
+            </actions>
+        </cue>
+
+        <cue name="paranid_anti" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.paranid" otherfaction="faction.antigone" value="-1.00"/>
+                <set_faction_relation faction="faction.antigone" otherfaction="faction.paranid" value="-1.00"/>
+                <show_notification text="'WAR: Antigone and Paranid'" />
+            </actions>
+        </cue>
+
+        <cue name="paranid_alliance" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.paranid" otherfaction="faction.alliance" value="-1.00"/>
+                <set_faction_relation faction="faction.alliance" otherfaction="faction.paranid" value="-1.00"/>
+                <show_notification text="'WAR: Alliance and Paranid'" />
+            </actions>
+        </cue>
+
+        <cue name="paranid_hatikvah" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.paranid" otherfaction="faction.hatikvah" value="-1.00"/>
+                <set_faction_relation faction="faction.hatikvah" otherfaction="faction.paranid" value="-1.00"/>
+                <show_notification text="'WAR: Hatikvah and Paranid'" />
+            </actions>
+        </cue>
+
+        <cue name="paranid_ministry" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.paranid" otherfaction="faction.ministry" value="-1.00"/>
+                <set_faction_relation faction="faction.ministry" otherfaction="faction.paranid" value="-1.00"/>
+                <show_notification text="'WAR: Ministry and Paranid'" />
+            </actions>
+        </cue>
+
+        <cue name="Do_teladi" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_value name="$ObjectTable" exact="table[
+                            {1} = table [
+                                $Name = 'Holy Order',
+                                $Return = teladi_hop,
+                                ],    
+                            {2} = table [
+                                $Name = 'Argon',
+                                $Return = teladi_argon,
+                                ],
+                            {3} = table [
+                                $Name = 'Antigone',
+                                $Return = teladi_anti,
+                                ],
+                            {4} = table [
+                                $Name = 'Alliance',
+                                $Return = teladi_alliance,
+                                ],  
+                            {5} = table [
+                                $Name = 'Hatikvah',
+                                $Return = teladi_ministry,
+                                ],
+                            {6} = table [
+                                $Name = 'Ministry',
+                                $Return = teladi_ministry,
+                                ],
+                            {7} = table [
+                                $Name = 'Paranid',
+                                $Return = teladi_paranid,
+                                ],                            
+                        ]" />
+
+            </actions>
+            <cues>
+                <cue name="teladi_Menu_LIB" ref="md.Illuminati.Menu_LIB">
+                    <param name="Title" value="'Teladi Relations'" />
+                    <param name="ObjectTable" value="$ObjectTable" />
+                    <param name="MenuType" value="'position'" />
+                    <param name="ButtonText" value="'WAR'" />
+                    <param name="Height" value="600" />
+                    <param name="Width" value="600" />
+                </cue>
+            </cues>
+        </cue>
+        <cue name="teladi_paranid" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.teladi" otherfaction="faction.paranid" value="-1.00"/>
+                <set_faction_relation faction="faction.paranid" otherfaction="faction.teladi" value="-1.00"/>
+                <show_notification text="'WAR: Paranid and Teladi'" />
+            </actions>
+        </cue>
+
+        <cue name="teladi_hop" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.teladi" otherfaction="faction.holyorder" value="-1.00"/>
+                <set_faction_relation faction="faction.holyorder" otherfaction="faction.teladi" value="-1.00"/>
+                <show_notification text="'WAR: HOP and Teladi'" />
+            </actions>
+        </cue>
+
+        <cue name="teladi_argon" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.teladi" otherfaction="faction.argon" value="-1.00"/>
+                <set_faction_relation faction="faction.argon" otherfaction="faction.teladi" value="-1.00"/>
+                <show_notification text="'WAR: Argon and Teladi'" />
+            </actions>
+        </cue>
+
+        <cue name="teladi_anti" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.teladi" otherfaction="faction.antigone" value="-1.00"/>
+                <set_faction_relation faction="faction.antigone" otherfaction="faction.teladi" value="-1.00"/>
+                <show_notification text="'WAR: Antigone and Teladi'" />
+            </actions>
+        </cue>
+
+        <cue name="teladi_alliance" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.teladi" otherfaction="faction.alliance" value="-1.00"/>
+                <set_faction_relation faction="faction.alliance" otherfaction="faction.teladi" value="-1.00"/>
+                <show_notification text="'WAR: Alliance and Teladi'" />
+            </actions>
+        </cue>
+
+        <cue name="teladi_hatikvah" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.teladi" otherfaction="faction.hatikvah" value="-1.00"/>
+                <set_faction_relation faction="faction.hatikvah" otherfaction="faction.teladi" value="-1.00"/>
+                <show_notification text="'WAR: Hatikvah and Teladi'" />
+            </actions>
+        </cue>
+
+        <cue name="teladi_ministry" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.teladi" otherfaction="faction.ministry" value="-1.00"/>
+                <set_faction_relation faction="faction.ministry" otherfaction="faction.teladi" value="-1.00"/>
+                <show_notification text="'WAR: Ministry and Teladi'" />
+            </actions>
+        </cue>
+
+        <cue name="Do_you" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_value name="$ObjectTable" exact="table[
+                            {1} = table [
+                                $Name = 'Holy Order',
+                                $Return = player_hop,
+                                ],    
+                            {2} = table [
+                                $Name = 'Argon',
+                                $Return = player_argon,
+                                ],
+                            {3} = table [
+                                $Name = 'Antigone',
+                                $Return = player_anti,
+                                ],
+                            {4} = table [
+                                $Name = 'Alliance',
+                                $Return = player_alliance,
+                                ],  
+                            {5} = table [
+                                $Name = 'Hatikvah',
+                                $Return = player_hatikvah,
+                                ],
+                            {6} = table [
+                                $Name = 'Ministry',
+                                $Return = player_ministry,
+                                ],
+                            {7} = table [
+                                $Name = 'Paranid',
+                                $Return = player_paranid,
+                                ],
+                            {8} = table [
+                                $Name = 'Teladi',
+                                $Return = player_teladi,
+                                ],                            
+                        ]" />
+
+            </actions>
+            <cues>
+                <cue name="player_Menu_LIB" ref="md.Illuminati.Menu_LIB">
+                    <param name="Title" value="'Player Relations'" />
+                    <param name="ObjectTable" value="$ObjectTable" />
+                    <param name="MenuType" value="'position'" />
+                    <param name="ButtonText" value="'WAR'" />
+                    <param name="Height" value="600" />
+                    <param name="Width" value="600" />
+                </cue>
+            </cues>
+        </cue>
+        <cue name="player_paranid" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.player" otherfaction="faction.paranid" value="-1.00"/>
+                <set_faction_relation faction="faction.paranid" otherfaction="faction.player" value="-1.00"/>
+                <show_notification text="'WAR: Paranid and You'" />
+            </actions>
+        </cue>
+
+        <cue name="player_hop" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.player" otherfaction="faction.holyorder" value="-1.00"/>
+                <set_faction_relation faction="faction.holyorder" otherfaction="faction.player" value="-1.00"/>
+                <show_notification text="'WAR: HOP and You'" />
+            </actions>
+        </cue>
+
+        <cue name="player_argon" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.player" otherfaction="faction.argon" value="-1.00"/>
+                <set_faction_relation faction="faction.argon" otherfaction="faction.player" value="-1.00"/>
+                <show_notification text="'WAR: Argon and You'" />
+            </actions>
+        </cue>
+
+        <cue name="player_anti" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.player" otherfaction="faction.antigone" value="-1.00"/>
+                <set_faction_relation faction="faction.antigone" otherfaction="faction.player" value="-1.00"/>
+                <show_notification text="'WAR: Antigone and You'" />
+            </actions>
+        </cue>
+
+        <cue name="player_alliance" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.player" otherfaction="faction.alliance" value="-1.00"/>
+                <set_faction_relation faction="faction.alliance" otherfaction="faction.player" value="-1.00"/>
+                <show_notification text="'WAR: Alliance and You'" />
+            </actions>
+        </cue>
+
+        <cue name="player_hatikvah" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.player" otherfaction="faction.hatikvah" value="-1.00"/>
+                <set_faction_relation faction="faction.hatikvah" otherfaction="faction.player" value="-1.00"/>
+                <show_notification text="'WAR: Hatikvah and You'" />
+            </actions>
+        </cue>
+
+        <cue name="player_ministry" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.player" otherfaction="faction.ministry" value="-1.00"/>
+                <set_faction_relation faction="faction.ministry" otherfaction="faction.player" value="-1.00"/>
+                <show_notification text="'WAR: Ministry and You'" />
+            </actions>
+        </cue>
+
+        <cue name="player_teladi" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.player" otherfaction="faction.teladi" value="-1.00"/>
+                <set_faction_relation faction="faction.teladi" otherfaction="faction.player" value="-1.00"/>
+                <show_notification text="'WAR: Teladi and You'" />
+            </actions>
+        </cue>
+
+        <cue name="Do_scale" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_value name="$ObjectTable" exact="table[
+                            {1} = table [
+                                $Name = 'Holy Order',
+                                $Return = scaleplate_hop,
+                                ],    
+                            {2} = table [
+                                $Name = 'Argon',
+                                $Return = scaleplate_argon,
+                                ],
+                            {3} = table [
+                                $Name = 'Antigone',
+                                $Return = scaleplate_anti,
+                                ],
+                            {4} = table [
+                                $Name = 'Alliance',
+                                $Return = scaleplate_alliance,
+                                ],  
+                            {5} = table [
+                                $Name = 'Hatikvah',
+                                $Return = scaleplate_hatikvah,
+                                ],
+                            {6} = table [
+                                $Name = 'Ministry',
+                                $Return = scaleplate_ministry,
+                                ],
+                            {7} = table [
+                                $Name = 'Paranid',
+                                $Return = scaleplate_paranid,
+                                ],
+                            {8} = table [
+                                $Name = 'Teladi',
+                                $Return = scaleplate_teladi,
+                                ],                            
+                        ]" />
+
+            </actions>
+            <cues>
+                <cue name="scaleplate_Menu_LIB" ref="md.Illuminati.Menu_LIB">
+                    <param name="Title" value="'Scale Plate Relations'" />
+                    <param name="ObjectTable" value="$ObjectTable" />
+                    <param name="MenuType" value="'position'" />
+                    <param name="ButtonText" value="'WAR'" />
+                    <param name="Height" value="600" />
+                    <param name="Width" value="600" />
+                </cue>
+            </cues>
+        </cue>
+        <cue name="scaleplate_paranid" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.scaleplate" otherfaction="faction.paranid" value="-1.00"/>
+                <set_faction_relation faction="faction.paranid" otherfaction="faction.scaleplate" value="-1.00"/>
+                <show_notification text="'WAR: Paranid and Scale Plate'" />
+            </actions>
+        </cue>
+
+        <cue name="scaleplate_hop" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.scaleplate" otherfaction="faction.holyorder" value="-1.00"/>
+                <set_faction_relation faction="faction.holyorder" otherfaction="faction.scaleplate" value="-1.00"/>
+                <show_notification text="'WAR: HOP and Scale Plate'" />
+            </actions>
+        </cue>
+
+        <cue name="scaleplate_argon" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.scaleplate" otherfaction="faction.argon" value="-1.00"/>
+                <set_faction_relation faction="faction.argon" otherfaction="faction.scaleplate" value="-1.00"/>
+                <show_notification text="'WAR: Argon and Scale Plate'" />
+            </actions>
+        </cue>
+
+        <cue name="scaleplate_anti" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.scaleplate" otherfaction="faction.antigone" value="-1.00"/>
+                <set_faction_relation faction="faction.antigone" otherfaction="faction.scaleplate" value="-1.00"/>
+                <show_notification text="'WAR: Antigone and Scale Plate'" />
+            </actions>
+        </cue>
+
+        <cue name="scaleplate_alliance" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.scaleplate" otherfaction="faction.alliance" value="-1.00"/>
+                <set_faction_relation faction="faction.alliance" otherfaction="faction.scaleplate" value="-1.00"/>
+                <show_notification text="'WAR: Alliance and Scale Plate'" />
+            </actions>
+        </cue>
+
+        <cue name="scaleplate_hatikvah" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.scaleplate" otherfaction="faction.hatikvah" value="-1.00"/>
+                <set_faction_relation faction="faction.hatikvah" otherfaction="faction.scaleplate" value="-1.00"/>
+                <show_notification text="'WAR: Hatikvah and Scale Plate'" />
+            </actions>
+        </cue>
+
+        <cue name="scaleplate_ministry" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.scaleplate" otherfaction="faction.ministry" value="-1.00"/>
+                <set_faction_relation faction="faction.ministry" otherfaction="faction.scaleplate" value="-1.00"/>
+                <show_notification text="'WAR: Ministry and Scale Plate'" />
+            </actions>
+        </cue>
+
+        <cue name="scaleplate_teladi" instantiate="true">
+            <conditions>
+                <event_cue_signalled />
+            </conditions>
+            <actions>
+                <set_faction_relation faction="faction.scaleplate" otherfaction="faction.teladi" value="-1.00"/>
+                <set_faction_relation faction="faction.teladi" otherfaction="faction.scaleplate" value="-1.00"/>
+                <show_notification text="'WAR: Teladi and Scale Plate'" />
+            </actions>
+        </cue>
+
+
+        <library name="Menu_LIB">
+            <params>
+                <param name="Title" default="'Menu'" />
+                <param name="List" default="'none'" />
+                <param name="Text" default="'Default'" />
+                <param name="ObjectTable" default="'none'" />
+                <param name="MenuType" default="'none'" />
+                <param name="ReturnCue" default="Main_Menu" />
+                <param name="ButtonText" default="'button'" />
+                <param name="Object" default="'none'" />
+                <param name="Col" default="2" />
+                <param name="Height" default="800" />
+                <param name="Width" default="1000" />
+            </params>
+            <cues>
+                <cue name="DrawMenu">
+                    <actions>
+                        <include_actions ref="StartMenu" />
+                        <do_if value="$MenuType == 'main'">
+                            <do_all exact="$ObjectTable.keys.count" counter="$i">
+                                <!-- <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" /> -->
+                                <set_value name="$Text" exact="$ObjectTable.{$i}.$Name" />
+                                <set_value name="$Menu" exact="$ObjectTable.{$i}.$Menu" />
+                                <signal_cue_instantly
+                                    cue="md.Simple_Menu_API.Add_Submenu_Link"
+                                    param = "table[
+                                    $id  = $Menu,
+                                    $text   = $Text,
+                                    ]"/>
+                            </do_all>
+                        </do_if>
+                        <do_if value="$MenuType == 'list'">
+                            <do_all exact="$List.count" counter="$i">
+                                <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" />
+                                <set_value name="$Text" exact="' Macro: %s\n Name: %s'.[$List.{$i},$List.{$i}.name]" />
+                                <set_value name="$Object" exact="$List.{$i}" />
+                                <include_actions ref="Label" />
+                                <include_actions ref="Button" />
+                            </do_all>
+                        </do_if>
+                        <do_if value="$MenuType == 'table1'">
+                            <set_value name="$Keys" exact="$ObjectTable.keys.list" />
+                            <do_all exact="$Keys.count" counter="$i">
+                                <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" />
+                                <set_value name="$Text" exact="if @$Keys.{$i}.knownname then @$Keys.{$i}.knownname else @$Keys.{$i}.name" />
+                                <include_actions ref="TitleLabel" />
+                                <set_value name="$Print" exact="$ObjectTable.{$Keys.{$i}}.$Objects" />
+                                <do_all exact="$Print.count" counter="$j">
+                                    <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" />
+                                    <set_value name="$Text" exact="if $Print.{$j}.knownname then $Print.{$j}.knownname else $Print" />
+                                    <set_value name="$Object" exact="$Print.{$j}" />
+                                    <include_actions ref="Label" />
+                                    <include_actions ref="Button" />
+                                </do_all>
+                            </do_all>
+                        </do_if>
+                        <do_if value="$MenuType == 'table2'">
+                            <set_value name="$Keys" exact="$ObjectTable.keys.list" />
+                            <do_all exact="$Keys.count" counter="$i">
+                                <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" />
+                                <set_value name="$Text" exact="if @$Keys.{$i}.knownname then @$Keys.{$i}.knownname else @$Keys.{$i}.name" />
+                                <include_actions ref="TitleLabel" />
+                                <set_value name="$Ships" exact="$ObjectTable.{$Keys.{$i}}.$Ships.count" />
+                                <set_value name="$Stations" exact="$ObjectTable.{$Keys.{$i}}.$Stations.count" />
+                                <set_value name="$Sectors" exact="$ObjectTable.{$Keys.{$i}}.$Sectors.count" />
+                                <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" />
+                                <set_value name="$Text" exact="'Ships: %s Stations: %s Sectors: %s'.[$Ships  + ' ',$Stations + ' ',$Sectors + ' ']" />
+                                <include_actions ref="Label" />
+                                <remove_value name="$ShipCount" />
+                                <remove_value name="$StationCount" />
+                                <remove_value name="$SectorOwned" />
+                            </do_all>
+                        </do_if>
+                        <do_if value="$MenuType == 'table3'">
+                            <set_value name="$Keys" exact="$ObjectTable.keys.list" />
+                            <do_all exact="$Keys.count" counter="$i">
+                                <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" />
+                                <set_value name="$Text" exact="@$Keys.{$i} + ' '" />
+                                <include_actions ref="Label" />
+                                <set_value name="$Print" exact="$ObjectTable.{$Keys.{$i}}.$Objects" />
+                                <do_all exact="$Print.count" counter="$j">
+                                    <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" />
+                                    <set_value name="$Text" exact="$Print.{$j} + ' '" />
+                                    <set_value name="$Object" exact="$Print.{$j}" />
+                                    <include_actions ref="Label" />
+                                    <include_actions ref="Button" />
+                                </do_all>
+                            </do_all>
+                        </do_if>
+                        <do_if value="$MenuType == 'position'">
+                            <do_all exact="$ObjectTable.keys.count" counter="$i">
+                                <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" />
+                                <do_if value="not $ObjectTable.{$i}.$Return?">
+                                    <set_value name="$Text" exact="' Sector: %s\n Name: %s\n Position: %s'.[player.sector.knownname,$ObjectTable.{$i}.$Name,$ObjectTable.{$i}.$Position]" />
+                                    <include_actions ref="Label" />
+                                </do_if>
+                                <do_else>
+                                    <set_value name="$Text" exact="$ObjectTable.{$i}.$Name" />
+                                    <set_value name="$ReturnCue" exact="$ObjectTable.{$i}.$Return" />
+                                    <include_actions ref="Label" />
+                                    <include_actions ref="Button" />
+                                </do_else>
+                            </do_all>
+                        </do_if>
+                    </actions>
+                </cue>
+            </cues>
+        </library>
+        <library name="StartMenu">
+            <actions>
+                <!-- <signal_cue_instantly cue="md.Simple_Menu_API.Create_Menu" param="table[
+                                        $columns = $Col, 
+                                        $title = $Title,
+                                        $height = $Height,
+                                        $width = $Width,
+                                        ]" /> 
+                <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" />
+                <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[ $col=1, 
+                                        $text = 'Return To Main Menu',
+                                        ]" />
+                <signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[ $col=2, $text=table[$text='Select', $color='Helper.color.brightyellow'], $onClick= md.Illuminati.Main_Menu,
+                                        ]" /> -->
+
+            </actions>
+        </library>
+        <library name="Button">
+            <actions>
+                <signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[ $col=2, $text=table[$text=$ButtonText, $color='Helper.color.brightyellow'], $onClick= $ReturnCue,
+                                        $echo = $Object,
+                                        ]" />
+            </actions>
+        </library>
+        <library name="Label">
+            <actions>
+                <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[ $col=1,                                        
+                                        $text = $Text, $color=table[ $r = 200, $g = 200, $b = 200, $a = 100 ],
+                                        ]" />
+            </actions>
+        </library>
+        <library name="TitleLabel">
+            <actions>
+                <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[ $col=1,                                         
+                                        $text = $Text,
+                                        $titleColor = 'Helper.color.brightyellow', $color=table[ $r = 200, $g = 200, $b = 200, $a = 100 ],
+                                        ]" />
+            </actions>
+        </library>
+    </cues>
+</mdscript>

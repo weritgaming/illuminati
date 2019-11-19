@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<content id="Illuminati" name="Illuminati"  description="Illuminati allows you to set factions at war with each other." author="Werit" version=".1" date="2019-11-13" save="0" >
+ <text language="7" name="Illuminati" description="Illuminati" author="Werit" />
+ <text language="33" name="Illuminati" description="Illuminati" author="Werit" />
+ <text language="34" name="Illuminati" description="Illuminati" author="Werit" />
+ <text language="39" name="Illuminati" description="Illuminati" author="Werit" />
+ <text language="44" name="Illuminati" description="Illuminati" author="Werit" />
+ <text language="49" name="Illuminati" description="Illuminati" author="Werit" />
+ <text language="55" name="Illuminati" description="Illuminati" author="Werit" />
+ <text language="81" name="Illuminati" description="Illuminati" author="Werit" />
+ <text language="82" name="Illuminati" description="Illuminati" author="Werit" />
+ <text language="86" name="Illuminati" description="Illuminati" author="Werit" />
+ <text language="88" name="Illuminati" description="Illuminati" author="Werit" />
+</content>
