@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<content id="Illuminati" name="Illuminati"  description="Illuminati allows you to set factions at war with each other." author="Werit" version=".1" date="2019-11-13" save="0" >
+<content id="Illuminati" name="Illuminati"  description="Illuminati allows you to set factions at war with each other." author="Werit" version=".2" date="2019-11-21" save="0" >
  <text language="7" name="Illuminati" description="Illuminati" author="Werit" />
  <text language="33" name="Illuminati" description="Illuminati" author="Werit" />
  <text language="34" name="Illuminati" description="Illuminati" author="Werit" />
