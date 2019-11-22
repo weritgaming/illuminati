@@ -9,3 +9,5 @@ Unpack Illuminati.zip and place the 2 directories (illuminati and simple_menu_ap
 To Use:
 
 In-game, go to the menu (Esc) -> Extension Options -> Illuminati
+
+Video:  https://www.youtube.com/watch?v=NPIm7XRyi7A
