@@ -186,9 +186,6 @@
                     <param name="ObjectTable" value="$ObjectTable" />
                     <param name="ButtonText" value="'Open Menu'" />
                 </cue>
-                <actions>
-
-                </actions>
             </cues>
         </cue>
         <cue name="Do_argon" instantiate="true">
@@ -867,7 +864,7 @@
                 <do_if value="$rel == -1">
                     <set_faction_mood faction="$f1" type="aggression" level="moodlevel.veryhigh"/>
                     <set_faction_mood faction="$f2" type="aggression" level="moodlevel.veryhigh"/>
-                </do_if> 
+                </do_if>
 
                 <show_notification text="'Influenced ' + $f1 + ' and ' + $f2" />
             </actions>
