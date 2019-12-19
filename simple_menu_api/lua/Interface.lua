@@ -112,7 +112,7 @@ Behavior:
 
     GetNPCBlackboard is capable of retrieving a copy of this list, as a lua
     table. However, lua cannot write back an edited table with one set of
-    args removed, since SetNPCBlackboard will only write a table.
+    args removed, since SetNPCBlackboard will only write a table (not list).
     
     So, this function will store the list of args locally, and overwrite
     the blackboard with nil, deleting the var. MD will recreate a list when
@@ -218,13 +218,11 @@ function L._Process_Command(args)
         -- Hand off to the standalone menu.
         Standalone_Menu.Open(args)
     
-
     -- Close the menu if open.
     elseif args.command == "Close_Menu" then
         -- Hand off to the standalone menu.
         Standalone_Menu.Close()
         
-
     elseif args.command == "Register_Options_Menu" then
         -- Validate all needed args are present.
         Lib.Validate_Args(args, {
@@ -235,7 +233,14 @@ function L._Process_Command(args)
         })
         -- Hand off.
         Options_Menu.Register_Options_Menu(args)
-                
+        
+    elseif args.command == "Refresh_Menu" then
+        -- Just skip for now if in wrong mode.
+        if menu_data.mode ~= "options" then
+            error("Refresh_Menu only supported for options menus")
+        end
+        Options_Menu.Refresh(args)
+
 
     -- Adjust table aspects.
     elseif args.command == "Call_Table_Method" then
@@ -352,11 +357,16 @@ function L.Make_Widget(args)
         
     -- Error if no rows present yet.
     if #menu_data.user_rows == 0 then
-        error("Simple_Menu.Make_Label: no user rows for Make command")
+        error("Simple_Menu.Make_Widget: no user rows for Make command")
     end
     -- Set the last row index, and pick out the row object.
     local row_index = #menu_data.user_rows
     local row = menu_data.user_rows[row_index]
+
+    -- Make sure the col is in range.
+    if not row[col] then
+        error("Simple_Menu.Make_Widget: column out of range")
+    end
         
     -- Filter for widget properties.
     --  Note: the widget creator does some property name validation,
@@ -484,9 +494,10 @@ function L.Make_Widget(args)
 
         -- Fill default ids in options.
         for i, option in ipairs(args.options) do
-            if not option.id then
-                option.id = i
-            end
+            -- Always overwrite the option's id field; this is required
+            -- to be the index when the ego callback returns it (as a string).
+            option.id = i
+
             -- Default icon needs to be "" not nil.
             if not option.icon then
                 option.icon = ""
@@ -504,13 +515,15 @@ function L.Make_Widget(args)
         row[col]:createDropDown(args.options, properties)
                 
         -- Event handlers.
-        -- Swapping ego's "value" to "id".
+        -- Swapping ego's "value" to "option_id".
+        -- Note: ego's backend converts the id to a string; special handling
+        -- will be used to convert them to numbers at callback.
         L.Widget_Event_Script_Factory(row[col], "onDropDownActivated", 
             row_index, args.col, {})
         L.Widget_Event_Script_Factory(row[col], "onDropDownConfirmed", 
-            row_index, args.col, {"id"})
+            row_index, args.col, {"option_index"}, {["option_index"] = "number"})
         L.Widget_Event_Script_Factory(row[col], "onDropDownRemoved", 
-            row_index, args.col, {"id"})
+            row_index, args.col, {"option_index"}, {["option_index"] = "number"})
 
     else
         -- Shouldn't be here.
@@ -527,9 +540,11 @@ end
 --  Row/col: widget coordinates.
 --  Params: List of names of values returned by the event, excepting the
 --   widget.  Eg. {"text", "textchanged", "wasconfirmed"}.
+--  Conversions: table of params (keyed by name) holding their conversion
+--   types, if any. Added to convert dropdown option strings to numbers.
 -- TODO: make use of Helper.set<name>Script functions, which can
 --  wrap the callback function with a ui event and sound.
-function L.Widget_Event_Script_Factory(widget, event, row, col, params)
+function L.Widget_Event_Script_Factory(widget, event, row, col, params, conversions)
 
     -- Handlers are set up in the "handlers" widget subtable.
     -- Note: lua variable args are handled with "..." in the function args.
@@ -551,7 +566,14 @@ function L.Widget_Event_Script_Factory(widget, event, row, col, params)
             -- In the unusual case of getting row/col, avoid overwrite
             -- just in case there is a difference.
             if not ret_table[field] then
-                ret_table[field] = vargs[i]
+                value = vargs[i]
+                -- Deal with any type conversions.
+                if conversions and conversions[field] then
+                    if conversions[field] == "number" then
+                        value = tonumber(value)
+                    end
+                end
+                ret_table[field] = value
             end
         end
         
